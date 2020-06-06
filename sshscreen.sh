@@ -13,17 +13,21 @@ listScreens() {
 createScreen() {
     if [ -z $1 ]
     then
-        echo "Please write Socket Name"
+        echo "Please write Session name"
+        return
+    fi
+    if screen -ls | grep -o "[0-9]*\.$1" >/dev/null 2>&1 ;
+    then
+        echo "Session name \"$1\" is already used"
         return
     fi
     screen -e^Bb -S $1
-    unset screenName
 }
 
 closeScreen() {
     if [ -z $1 ]
     then
-        echo "Please write Socket Name"
+        echo "Please write Session name"
         return
     fi
     screen -X -S $1 quit
@@ -32,7 +36,7 @@ closeScreen() {
 reatachScreen(){
     if [ -z $1 ]
     then
-        echo "Please write Socket Name"
+        echo "Please write Session name"
         return
     fi
     screen -e^Bb -rd $1
@@ -41,7 +45,7 @@ reatachScreen(){
 mirrorScreen(){
     if [ -z $1 ]
     then
-        echo "Please write Socket Name"
+        echo "Please write Session name"
         return
     fi
    screen -e^Bb -x $1
@@ -50,7 +54,7 @@ mirrorScreen(){
 deattachScreen() {
     if [ -z $1 ]
     then
-        echo "Please write Socket Name"
+        echo "Please write Session name"
         return
     fi
     screen -d $1
@@ -85,6 +89,7 @@ helpFunc="
     }
 
 countdown() {
+    trap exit INT EXIT
 tput sc
 for i in {30..0}
 do 
@@ -108,20 +113,21 @@ done
 while true
 do
 
-tput clear      # clear the screen
-tput cup 2 5   # Move cursor to screen location X,Y (top left is 0,0)
-tput setaf 6    # Set a foreground colour using ANSI escape
-countdown $$ &
+tput clear
+tput cup 2 5   
+tput setaf 6   
+countdown $$ &  
 countdown_pid=$!
 
-echo "SSH  Screen Select"
+echo -e "SSH  Screen Select:\tWelcome to Server $HOSTNAME"
 tput sgr0
 helpFunc
 
 echo
 read -e  -p 'What do you want ? »' noargstart
 tput rc
-    kill $countdown_pid >/dev/null 2>&1
+    kill  $countdown_pid >/dev/null 2>&1 
+    wait $countdown_pid 2>/dev/null
     noargstartarray=($(echo $noargstart | tr " " "\n"))
     set ${noargstartarray[@]}
     case $1 in
