@@ -88,13 +88,17 @@ countdown() {
 tput sc
 for i in {30..0}
 do 
+    if ! kill -0 $1 > /dev/null 2>&1; then
+        exit
+    fi
     tput sc
     tput cup 3 5; echo "Time left $i "
     tput rc
     if [ $i = "0" ]; then
+        clear
         echo "No command is given."
         echo "Quiting ...."
-        kill $1 >/dev/null 2>&1
+        kill -9 $1 >/dev/null 2>&1
         exit
     fi
     sleep 1
@@ -114,14 +118,8 @@ echo "SSH  Screen Select"
 tput sgr0
 helpFunc
 
-tput rev        # Set reverse video mode
-tput sgr0
-
-tput bold       # Set bold mode 
-    echo
-    read -p 'What do you want ? »' -e noargstart
-    tput clear
-tput sgr0
+echo
+read -e  -p 'What do you want ? »' noargstart
 tput rc
     kill $countdown_pid >/dev/null 2>&1
     noargstartarray=($(echo $noargstart | tr " " "\n"))
