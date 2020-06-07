@@ -69,11 +69,11 @@ helpFunc="
         (cl)ose  Screen-Name
             Close Screen
         (re)atach Screen-Name
-            Re attach to screen
+            Reattach to screen
         (mi)rror Screen-Name
             Attach screen second or third times for multiple usage
-        (de)attach  Screen-Name
-            Deattach Screen
+        (de)atach  Screen-Name
+            Deatach Screen
         (ex)it
             Close this connection
 "
