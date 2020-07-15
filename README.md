@@ -26,7 +26,7 @@ This script is requires must server side installation and client side setup for 
 
 ```bash
 #Run these commands with Root privileges. If you are not have Root privileges you can achieve with sudo su command.
-curl https://raw.githubusercontent.com/ahmetozer/sshscreen/master/sshscreen.sh -O /usr/bin/sshscreen
+curl https://raw.githubusercontent.com/ahmetozer/sshscreen/master/sshscreen.sh -o /usr/bin/sshscreen
 chmod +x /usr/bin/sshscreen
 ```
 
