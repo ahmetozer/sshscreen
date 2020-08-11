@@ -7,7 +7,7 @@ if [ ! -d "$SCREENDIR" ]; then
 fi
 
 listScreens() {
- screen -list
+ SCREENDIR=$SCREENDIR screen -list
 }
 
 createScreen() {
@@ -16,12 +16,12 @@ createScreen() {
         echo "Please write Session name"
         return
     fi
-    if screen -ls | grep -o "[0-9]*\.$1" >/dev/null 2>&1 ;
+    if SCREENDIR=$SCREENDIR screen -ls | grep -o "[0-9]*\.$1" >/dev/null 2>&1 ;
     then
         echo "Session name \"$1\" is already used"
         return
     fi
-    screen -e^Bb -S $1
+    SCREENDIR=$SCREENDIR screen -e^Bb -S $1
 }
 
 closeScreen() {
@@ -30,7 +30,7 @@ closeScreen() {
         echo "Please write Session name"
         return
     fi
-    screen -X -S $1 quit
+    SCREENDIR=$SCREENDIR screen -X -S $1 quit
 }
 
 reatachScreen(){
@@ -39,7 +39,7 @@ reatachScreen(){
         echo "Please write Session name"
         return
     fi
-    screen -e^Bb -rd $1
+    SCREENDIR=$SCREENDIR screen -e^Bb -rd $1
 }
 
 mirrorScreen(){
@@ -48,7 +48,7 @@ mirrorScreen(){
         echo "Please write Session name"
         return
     fi
-   screen -e^Bb -x $1
+   SCREENDIR=$SCREENDIR screen -e^Bb -x $1
 }
 
 deattachScreen() {
@@ -57,7 +57,7 @@ deattachScreen() {
         echo "Please write Session name"
         return
     fi
-    screen -d $1
+    SCREENDIR=$SCREENDIR screen -d $1
 }
 
 helpFunc="
