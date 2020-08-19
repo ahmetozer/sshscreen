@@ -124,12 +124,17 @@ tput sgr0
 helpFunc
 
 echo
-read -e  -p 'What do you want ? »' noargstart
-tput rc
-    kill  $countdown_pid >/dev/null 2>&1 
-    wait $countdown_pid 2>/dev/null
+if [ -z "$1" ]
+then
+    read -e  -p 'What do you want ? »' noargstart
+    tput rc
     noargstartarray=($(echo $noargstart | tr " " "\n"))
     set ${noargstartarray[@]}
+else
+    exitonexit="yes"
+fi
+    kill  $countdown_pid >/dev/null 2>&1
+    wait $countdown_pid 2>/dev/null
     case $1 in
         list|li)
             shift 1
@@ -164,5 +169,11 @@ tput rc
         ;;
     esac
 
+if [ ! -z "$exitonexit" ]
+then
+        echo -e "$funcoutput"
+        break
+fi
+set --
 
 done
