@@ -1,6 +1,9 @@
 #!/bin/bash
 
 SCREENDIR="$HOME/.sshscreen"
+
+source /etc/profile
+
 if [ ! -d "$SCREENDIR" ]; then
   mkdir -p $SCREENDIR
   chmod 700 $SCREENDIR
